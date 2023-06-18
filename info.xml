@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<extension key="com.klangsoft.extreadme" type="module">
+  <file>extreadme</file>
+  <name>Extension README</name>
+  <description>Display extension README during extension management operations (i.e. install, enable, disable, uninstall, update). Also allows an extension to include a functional Markdown document in it's user interface.</description>
+  <license>AGPL-3.0</license>
+  <maintainer>
+    <author>David Reedy Jr</author>
+    <email>davidrjr.konadave@gmail.com</email>
+  </maintainer>
+  <urls>
+    <url desc="Main Extension Page">https://github.com/konadave/com.klangsoft.extreadme</url>
+    <url desc="Documentation">https://github.com/konadave/com.klangsoft.extreadme</url>
+    <url desc="Support">https://github.com/konadave/com.klangsoft.extreadme/issues</url>
+    <url desc="Licensing">http://www.gnu.org/licenses/agpl-3.0.html</url>
+  </urls>
+  <releaseDate>2023-06-19</releaseDate>
+  <version>1.0</version>
+  <develStage>stable</develStage>
+  <compatibility>
+    <ver>5.0</ver>
+  </compatibility>
+  <comments>This extension is pretty basic and doesn't use any recently added "stuff". I wouldn't be surprised if it works without issue on any currently active installation of CiviCRM. If you find a version incompatibility, please let me know so I can update the requirements. Thanks!</comments>
+  <classloader>
+    <psr0 prefix="CRM_" path="."/>
+    <psr4 prefix="Civi\" path="Civi"/>
+  </classloader>
+  <civix>
+    <namespace>CRM/Extreadme</namespace>
+    <format>22.10.0</format>
+    <angularModule>crmExtreadme</angularModule>
+  </civix>
+  <mixins>
+    <mixin>mgd-php@1.0.0</mixin>
+    <mixin>setting-php@1.0.0</mixin>
+  </mixins>
+</extension>
