@@ -24,7 +24,9 @@ The simplest way to include a Markdown document is in straight HTML markup.
 
 `data-extreadme` - the document to be loaded.
 
-`data-docroot` - base URL for the Markdown document, used to fix local images and relative links. When the document is **not** preloaded, as in this case, this attribute need only be specified.
+`data-extroot` - relative path, from document root, to the extension. Not needed for markup only approach.
+
+`data-docroot` - relative path, from extension root, for the Markdown document. Not needed for markup only approach.
 
 The above will render the document you're reading right now. Include something like that in your page/form template.
 
@@ -41,13 +43,14 @@ try {
   if (!$api['is_error']) {
     // you could inject some markup with the returned values
     CRM_Core_Region::instance('page-body')->add([
-      'markup' => "<div class=\"markdown-body ext-readme\" data-extkey=\"com.klangsoft.extreadme\" data-docroot=\"{$api['root']}\">{$api['html']}</div>"
+      'markup' => "<div class=\"markdown-body ext-readme\" data-extkey=\"com.klangsoft.extreadme\" data-extroot=\"{$api['extroot']}\" data-docroot=\"{$api['docroot']}\">{$api['html']}</div>"
     ]);
   
     // or you could assign the values to the template ($form/$page)...
-    $form->assign('extreadme_docroot', $api['root']);
+    $form->assign('extreadme_docroot', $api['docroot']);
+    $form->assign('extreadme_extroot', $api['extroot']);
     $form->assign('extreadme_content', $api['html']);
-    // ...and then render them there with {$extreadme_docroot} and {$extreadme_content}
+    // ...and then render them there with {$extreadme_docroot}, {$extreadme_extroot} and {$extreadme_content}
   }
 }
 catch (Exception $e) {

@@ -9,12 +9,13 @@
      */
     fixItUp: function($md) {
       const docroot = $md.attr('data-docroot');
+      const extroot = $md.attr('data-extroot');
       // relative images
       $md.find('img').each(function() {
         const $img = $(this);
         const src = $img.attr('src');
         if (src.indexOf('http') !== 0) {
-          $img.attr('src', docroot + src);
+          $img.attr('src', extroot + docroot + src);
         }
       });
       // links
@@ -33,7 +34,7 @@
         // all other local links get fixed and open in new tab/page
         else {
           $a.attr({
-            href: docroot + href,
+            href: extroot + href,
             target: '_blank'
           })
         }
@@ -59,7 +60,10 @@
       .then((result) => {
         $md.removeClass('loading');
         if (result.is_error === 0) {
-          $md.attr('data-docroot', result.root)
+          $md.attr({
+            'data-docroot': result.docroot,
+            'data-extroot': result.extroot
+          })
             .html(result.html)
             .prop('scrollTop', 0);
   

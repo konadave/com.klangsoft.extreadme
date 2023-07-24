@@ -110,14 +110,14 @@ function extreadme_civicrm_buildForm($formName, &$form) {
       $api = civicrm_api3('Extension', 'readme', [
         'key' => $key,
         'ext' => $ext,
-        'readme' => "{$ext['path']}/$readme"
+        'readme' => $readme
       ]);
   
       if (!$api['is_error']) {
         // add it to the page (top of content)
         // the alterContent hook will see this and inject additional files
         CRM_Core_Region::instance('page-body')->add([
-          'markup' => "<div class=\"ext-readme markdown-body\" data-extkey=\"$key\" data-docroot=\"{$api['root']}\">{$api['html']}</div>",
+          'markup' => "<div class=\"ext-readme markdown-body\" data-extkey=\"$key\" data-extroot=\"{$api['extroot']}\" data-docroot=\"{$api['docroot']}\">{$api['html']}</div>",
           'weight' => -100
         ]);
         // and make sure that footer gets placed properly (bottom of content)

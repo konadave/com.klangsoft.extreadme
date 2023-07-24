@@ -11,13 +11,10 @@ function civicrm_api3_extension_readme($params) {
   ]);
 
   $docroot = rtrim($_SERVER['DOCUMENT_ROOT'], '/');
-  $readme = $params['readme'];
+  $extroot = $ext['path'] . '/';
+  $readme = $extroot . ltrim($params['readme'], '/');
 
-  if (strpos($readme, $docroot) !== 0) {
-    $readme = $docroot . $readme;
-  }
-
-  if (strpos($readme, $ext['path']) !== 0 || !file_exists($readme)) {
+  if (!file_exists($readme)) {
     return [
       'is_error' => 1,
       'error_message' => E::ts('Danger, Will Robinson!')
@@ -29,7 +26,8 @@ function civicrm_api3_extension_readme($params) {
 
   return [
     'is_error' => 0,
-    'root' => dirname(substr($readme, strlen($docroot))) . '/',
+    'docroot' => substr(dirname(realpath($readme)), strlen($extroot)) . '/',
+    'extroot' => substr($extroot, strlen($docroot)),
     'html' => $parsedown->text(file_get_contents($readme))
   ];
 }
