@@ -64,16 +64,20 @@
             'data-docroot': result.docroot,
             'data-extroot': result.extroot
           })
-            .html(result.html)
+            .html(extreadme.sanitize(result.html))
             .prop('scrollTop', 0);
   
-          this.fixItUp($md);
+          extreadme.fixItUp($md);
         }
       });
     },
     _load: null,
 
     nop: function() {},
+
+    sanitize: function(b64) {
+      return DOMPurify.sanitize(marked.parse(atob(b64)));
+    },
 
     /**
      * Set things up.
@@ -100,6 +104,7 @@
           });
         }
         else {
+          $md.html(extreadme.sanitize($md.html()));
           extreadme.fixItUp($md);
         }
       });

@@ -170,8 +170,11 @@ function extreadme_civicrm_upgrade($op, CRM_Queue_Queue $queue = NULL) {
 function extreadme_civicrm_alterContent(&$content, $context, $tplName, &$object) {
   if (preg_match('/class\s*=\s*".*?markdown-body.*?"/m', $content)) {
     // at this point, it's too late to use Civi::resouces()
+    $marked = Civi::resources()->getUrl('civicrm', 'bower_components/marked/marked.min.js');
     $content .= '<link type="text/css" rel="stylesheet" href="' .  E::url('css/extreadme.css') . '" />';
     $content .= '<link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.2.0/github-markdown.min.css" />';
+    $content .= '<script type="text/javascript" src="' . $marked .'"></script>';
+    $content .= '<script type="text/javascript" src="' .  E::url('js/purify/purify.min.js') . '"></script>';
     $content .= '<script type="text/javascript" src="' .  E::url('js/extreadme.js') . '"></script>';
   }
 }

@@ -21,13 +21,10 @@ function civicrm_api3_extension_readme($params) {
     ];
   }
 
-  require_once(E::path('src/Parsedown.php'));
-  $parsedown = new Parsedown();
-
   return [
     'is_error' => 0,
     'docroot' => substr(dirname(realpath($readme)), strlen($extroot)) . '/',
     'extroot' => substr($extroot, strlen($docroot)),
-    'html' => $parsedown->text(file_get_contents($readme))
+    'html' => base64_encode(file_get_contents($readme))
   ];
 }
