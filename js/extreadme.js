@@ -84,6 +84,7 @@
       $('.markdown-body[data-docroot]').each(function() {
         const $md = $(this);
         const readme = $md.attr('data-extreadme');
+        this.parentElement.classList.add('ext-readme-container');
 
         if (readme) {
           $md.attr({
