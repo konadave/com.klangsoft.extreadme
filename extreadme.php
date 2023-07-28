@@ -54,6 +54,10 @@ function extreadme_civicrm_buildForm($formName, &$form) {
     $key = $form->get_template_vars('key');
     $ext = $form->get_template_vars('extension');
 
+    if ($form->getAction() == CRM_Core_Action::UPDATE) {
+      unset($ext['path']);
+    }
+
     // download the extension if not local
     if (empty($ext['path']) && !empty($ext['downloadUrl'])) {
       $extDir = _extreadme_readmeDir();
@@ -114,15 +118,11 @@ function extreadme_civicrm_buildForm($formName, &$form) {
       ]);
   
       if (!$api['is_error']) {
-        // add it to the page (top of content)
+        // add it to the page (after content)
         // the alterContent hook will see this and inject additional files
         CRM_Core_Region::instance('page-body')->add([
           'markup' => "<div class=\"ext-readme markdown-body\" data-extkey=\"$key\" data-extroot=\"{$api['extroot']}\" data-docroot=\"{$api['docroot']}\">{$api['html']}</div>",
-          'weight' => -100
-        ]);
-        // and make sure that footer gets placed properly (bottom of content)
-        CRM_Core_Region::instance('page-body')->add([
-          'markup' => '<div class="clear"></div>'
+          'weight' => 100
         ]);
       }
     }
@@ -149,7 +149,7 @@ function extreadme_civicrm_upgrade($op, CRM_Queue_Queue $queue = NULL) {
       if (is_link($fn)) {
         unlink($fn);
       }
-      else {
+      elseif (is_dir($fn)) {
         _extreadme_clearDir($fn);
       }
     }
