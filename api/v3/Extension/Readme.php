@@ -28,6 +28,6 @@ function civicrm_api3_extension_readme($params) {
     'is_error' => 0,
     'docroot' => substr(dirname(realpath($readme)), strlen($extroot)) . '/',
     'extroot' => substr($extroot, strlen($docroot)),
-    'html' => $parsedown->text(file_get_contents($readme))
+    'html' => CRM_Utils_String::purifyHTML($parsedown->text(file_get_contents($readme)))
   ];
 }
